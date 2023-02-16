@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Logo() {
+  const nav = useNavigate();
   return (
-    <div style={{ display: 'flex', alignItems: 'baseline' }}>
+    <button className='app-logo' onClick={() => nav('/')}>
       <div
         style={{
           width: '20px',
@@ -20,6 +22,6 @@ export default function Logo() {
           backgroundColor: '#F063B8',
         }}
       ></div>
-    </div>
+    </button>
   );
 }

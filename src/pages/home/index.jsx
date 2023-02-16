@@ -6,6 +6,7 @@ import { host } from '../../constant';
 import Testimonial from './Testimonial';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import '../../style/home.css';
 
 export default function Home() {
   const isSignedIn = localStorage.getItem('accessToken');

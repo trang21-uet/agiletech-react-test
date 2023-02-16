@@ -1,0 +1,71 @@
+aside {
+  background-color: #d9d9d9;
+  padding: 32px 0;
+  width: 320px;
+}
+
+.logo-wrapper {
+  margin-left: 100px;
+}
+
+nav {
+  margin-left: 34px;
+  margin-top: 40px;
+}
+
+nav li {
+  margin: 12px 0;
+}
+
+main {
+  padding: 120px;
+  width: 100%;
+}
+
+main .add-form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 53px;
+}
+
+.add-input {
+  height: 100%;
+  width: 360px;
+  font-size: 18px;
+  padding: 0 32px;
+  border-radius: 6px;
+  margin-left: 68px;
+}
+
+main table {
+  width: 100%;
+}
+
+td,
+th {
+  background-color: #d9d9d9;
+  padding: 12px 0;
+  border: 1px solid #000;
+  border-collapse: collapse;
+  text-align: center;
+  font-weight: normal;
+  font-size: 20px;
+}
+
+.other {
+  text-align: right;
+}
+
+.other button {
+  background-color: #d9d9d9;
+  border: none;
+  cursor: pointer;
+  padding: 12px 80px;
+  margin-top: 26px;
+  font-size: 20px;
+}
+
+.other button:hover {
+  background-color: #ccc;
+}
