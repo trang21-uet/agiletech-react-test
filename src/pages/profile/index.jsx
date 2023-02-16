@@ -4,12 +4,15 @@ import '../../style/profile.css';
 import data from './data';
 import { host } from '../../constant';
 import { BsFillPencilFill, BsFillTrashFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
   const [posts, setPosts] = useState({});
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+
+  const nav = useNavigate();
 
   const getPosts = async () => {
     const response = await fetch(host + 'posts', {
@@ -58,6 +61,16 @@ export default function Profile() {
     await getPosts();
   };
 
+  const logOut = async () => {
+    const response = await fetch(host + 'auth/logout', {
+      method: 'DELETE',
+    });
+    const text = await response.text();
+    console.log(text);
+    localStorage.clear();
+    nav('/');
+  };
+
   useEffect(() => {
     getPosts();
   }, []);
@@ -91,7 +104,15 @@ export default function Profile() {
               <a href='/'>Posts</a>
             </li>
             <li>
-              <a href='/'>Logout</a>
+              <a
+                href='/'
+                onClick={event => {
+                  event.preventDefault();
+                  logOut();
+                }}
+              >
+                Logout
+              </a>
             </li>
           </ul>
         </nav>

@@ -105,7 +105,7 @@ p {
 
 .testimonial .row img {
   height: 90.16px;
-  clip-path: ellipse(64px 40px);
+  clip-path: ellipse(64px 48px);
   margin-right: 46px;
 }
 
@@ -167,7 +167,7 @@ footer {
 }
 
 .footer-nav li {
-  margin: 12px 0;
+  margin: 20px 0;
 }
 
 .footer-nav li a:hover {

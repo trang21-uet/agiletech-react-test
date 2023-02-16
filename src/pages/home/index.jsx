@@ -134,7 +134,7 @@ export default function Home() {
           <div className='column'>
             <div className='title'>
               <Logo />
-              <h3 style={{ marginLeft: 20 }}>Dataware house</h3>
+              <h3 style={{ marginLeft: 20 }}>DataWarehouse</h3>
             </div>
             <div
               style={{
