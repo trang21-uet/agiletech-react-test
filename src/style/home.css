@@ -22,8 +22,6 @@ p {
 .features-grid {
   display: grid;
   grid: 50% 50% / 50% 50%;
-  grid-gap: 49.24px 100px;
-  margin: 49.24px;
 }
 
 .feature {

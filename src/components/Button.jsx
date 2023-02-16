@@ -1,16 +1,16 @@
 import React from 'react';
 
-export default function Button({ children, width, style, to }) {
+export default function Button(props) {
   return (
-    <a
-      href={to || '/'}
+    <button
+      {...props}
       className='global-btn'
       style={{
-        width: width,
-        ...style,
+        width: props.width,
+        ...props.style,
       }}
     >
-      {children}
-    </a>
+      {props.children}
+    </button>
   );
 }

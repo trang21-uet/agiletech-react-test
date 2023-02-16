@@ -3,14 +3,16 @@ import { Button, Logo } from '../../components';
 import data from './data';
 import Feature from './Feature';
 import { host } from '../../constant';
-import Testimonial from './Testimonial';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import Testimonials from './Testimonials';
 import '../../style/home.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
-  const isSignedIn = localStorage.getItem('accessToken');
+  const [isSignedIn, setIsSignIn] = useState(
+    localStorage.getItem('accessToken')
+  );
   const [testimonials, setTestimonials] = useState([]);
+  const nav = useNavigate();
 
   useEffect(() => {
     const request = async () => {
@@ -22,6 +24,16 @@ export default function Home() {
     request();
   }, []);
 
+  const logOut = async () => {
+    const response = await fetch(host + 'auth/logout', {
+      method: 'DELETE',
+    });
+    const text = await response.text();
+    console.log(text);
+    localStorage.clear();
+    setIsSignIn(false);
+  };
+
   return (
     <div className='container'>
       <header>
@@ -32,13 +44,16 @@ export default function Home() {
           <Logo />
           {isSignedIn ? (
             <div style={{ display: 'flex' }}>
-              <Button width='208px' style={{ marginRight: '31px' }}>
+              <Button
+                onClick={() => nav('/profile')}
+                style={{ marginRight: 32 }}
+              >
                 Profile
               </Button>
-              <Button width='208px'>Log out</Button>
+              <Button onClick={logOut}>Log out</Button>
             </div>
           ) : (
-            <Button width='208px'>Sign In</Button>
+            <Button onClick={() => nav('/login')}>Sign In</Button>
           )}
         </div>
         <div
@@ -54,7 +69,6 @@ export default function Home() {
                 fontSize: '80px',
                 maxWidth: '60%',
                 lineHeight: '88px',
-                fontFamily: 'Helvetica',
                 fontWeight: '700',
                 color: '#212353',
               }}
@@ -65,8 +79,6 @@ export default function Home() {
               style={{
                 color: '#4B5D68',
                 maxWidth: ' 33%',
-                fontSize: '18px',
-                lineHeight: '28px',
                 marginTop: '49.69px',
               }}
             >
@@ -74,7 +86,7 @@ export default function Home() {
               security, so you can store your data here safely but not be afraid
               of being stolen by others.
             </p>
-            <Button width='168.94px' style={{ marginTop: '46.69px' }}>
+            <Button style={{ marginTop: '46.69px', padding: '0 40px' }}>
               Learn more
             </Button>
           </div>
@@ -114,79 +126,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section id='testimonials'>
-          <h3
-            className='section-title'
-            style={{ color: '#fff', margin: '110px 0 0 93px' }}
-          >
-            Testimonials
-          </h3>
-          <Carousel
-            showArrows
-            showIndicators
-            showStatus={false}
-            showThumbs={false}
-            renderArrowPrev={(onClickHandler, hasPrev) =>
-              hasPrev && (
-                <button
-                  type='button'
-                  onClick={onClickHandler}
-                  className='slide-controls'
-                  id='prev-slide'
-                >
-                  ←
-                </button>
-              )
-            }
-            renderArrowNext={(onClickHandler, hasNext) =>
-              hasNext && (
-                <button
-                  type='button'
-                  onClick={onClickHandler}
-                  className='slide-controls'
-                  id='next-slide'
-                >
-                  →
-                </button>
-              )
-            }
-            renderIndicator={(onClickHandler, isSelected, index, label) => {
-              if (isSelected) {
-                return (
-                  <li
-                    style={{
-                      background: '#F063B8',
-                      width: 10,
-                      height: 10,
-                      borderRadius: 5,
-                    }}
-                    className='slide-indicator'
-                    aria-label={`Selected: ${label} ${index + 1}`}
-                    title={`Selected: ${label} ${index + 1}`}
-                  />
-                );
-              }
-              return (
-                <li
-                  className='slide-indicator'
-                  onClick={onClickHandler}
-                  onKeyDown={onClickHandler}
-                  value={index}
-                  key={index}
-                  role='button'
-                  tabIndex={0}
-                  title={`${label} ${index + 1}`}
-                  aria-label={`${label} ${index + 1}`}
-                />
-              );
-            }}
-          >
-            {testimonials.map(item => (
-              <Testimonial {...item} key={item.id} />
-            ))}
-          </Carousel>
-        </section>
+        <Testimonials data={testimonials} />
       </main>
+
       <footer>
         <div className='footer-grid'>
           <div className='column'>

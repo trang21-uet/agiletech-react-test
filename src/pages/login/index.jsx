@@ -1,14 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Logo, Button } from '../../components';
+import { host } from '../../constant';
 
 export default function Login() {
+  const [username, setUsername] = useState('');
+  const [empty, setEmpty] = useState(false);
+  const [wrongUsername, setWrongUsername] = useState(false);
+  const nav = useNavigate();
+
+  const signIn = async () => {
+    setWrongUsername(false);
+    setEmpty(false);
+    if (!username) {
+      setEmpty(true);
+    } else {
+      const response = await fetch(host + 'auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
+      const json = await response.json();
+      if (json?.code === 401) {
+        setWrongUsername(true);
+      } else {
+        localStorage.setItem('accessToken', json.accessToken);
+        localStorage.setItem('refreshToken', json.refreshToken);
+        nav('/');
+      }
+      console.log(json);
+    }
+  };
+
   return (
     <div
       className='container'
       style={{ position: 'relative', height: '100vh' }}
     >
       <Logo />
-      <div
+      <form
         id='form'
         style={{
           position: 'absolute',
@@ -21,6 +53,10 @@ export default function Login() {
           alignItems: 'center',
           justifyContent: 'center',
         }}
+        onSubmit={event => {
+          event.preventDefault();
+          signIn();
+        }}
       >
         <h1 style={{ fontSize: '64px', marginBottom: '28px' }}>Sign In</h1>
         <div style={{ width: '100%', marginBottom: '46px' }}>
@@ -29,6 +65,8 @@ export default function Login() {
             type='text'
             id='username'
             name='username'
+            value={username}
+            onChange={event => setUsername(event.target.value)}
             style={{
               width: '100%',
               height: '57px',
@@ -40,9 +78,15 @@ export default function Login() {
               outline: 'none',
             }}
           />
+          <p style={{ color: empty || wrongUsername ? '#f00' : 'transparent' }}>
+            {empty && 'Username is required'}
+            {wrongUsername && 'Wrong username'}
+          </p>
         </div>
-        <Button width='100%'>Sign in</Button>
-      </div>
+        <Button type='submit' width='100%'>
+          Sign in
+        </Button>
+      </form>
     </div>
   );
 }

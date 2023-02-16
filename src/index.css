@@ -46,6 +46,10 @@ h5 {
   align-items: center;
   justify-content: center;
   color: #fff !important;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 12px 80px;
 }
 
 .global-btn:hover {
